@@ -1,0 +1,19 @@
+@import "src/app/styles/mixins.scss";
+
+.main-container {
+  height: calc(100vh - 64px);
+
+  .main-page {
+    margin: auto;
+    background-color: rgb(235, 235, 235);
+    @include small {
+      max-width: 560px;
+    }
+    @include medium {
+      max-width: 980px;
+    }
+    @include large {
+      max-width: 1280px;
+    }
+  }
+}
