@@ -1,0 +1,12 @@
+.character-card {
+  height: calc(100% - 30px);
+
+  mat-card-title{
+    font-size: 15px;
+  }
+
+  img {
+    height: 230px;
+    object-fit: cover;
+  }
+}

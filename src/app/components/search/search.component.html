@@ -1,0 +1,16 @@
+<mat-form-field class="example-form-field" appearance="fill">
+  <mat-label>Clearable input</mat-label>
+
+  <input matInput type="text" [(ngModel)]="characterName" />
+  <button
+    *ngIf="characterName"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    (click)="characterName = ''"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+
+<button mat-raised-button (click)="search()">Buscar</button>
