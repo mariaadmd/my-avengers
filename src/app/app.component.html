@@ -1,17 +1,12 @@
 <app-navbar (openDrawer)="drawer.toggle()"></app-navbar>
 
 <mat-drawer-container class="main-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="over">
+    <button mat-raised-button [routerLink]="['/']">Pagina principal</button>
+    <button mat-raised-button [routerLink]="['/myTeam']">Mi equipo</button>
+  </mat-drawer>
 
-    <mat-drawer #drawer class="example-sidenav" mode="side">
-        <p>Auto-resizing sidenav</p>
-        <p>Lorem, ipsum dolor sit amet consectetur.</p>
-        <button mat-raised-button>
-            Toggle extra text
-        </button>
-    </mat-drawer>
-
-    <div class="main-page">
-        <router-outlet></router-outlet>
-    </div>
-
+  <div class="main-page">
+    <router-outlet></router-outlet>
+  </div>
 </mat-drawer-container>
