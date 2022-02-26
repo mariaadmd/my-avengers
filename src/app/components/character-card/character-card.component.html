@@ -3,13 +3,19 @@
     <mat-card-title>{{ character.name }}</mat-card-title>
   </mat-card-header>
   <img
+    (click)="goToCharacterDetail()"
     mat-card-image
     src="{{ character.thumbnail.path + '.' + character.thumbnail.extension }}"
-    alt="Photo of a Shiba Inu"
+    class="animate__animated"
+    onload="this.classList.add('animate__fadeIn')"
   />
   <mat-card-content> </mat-card-content>
   <mat-card-actions>
-    <button mat-button *ngIf="!isMine" (click)="addCharacter()">Añadir a mi equipo</button>
-    <button mat-button *ngIf="isMine" (click)="deleteCharacter()">Eliminar de mi equipo</button>
+    <button mat-button *ngIf="!isMine" (click)="addCharacter()">
+      Añadir a mi equipo
+    </button>
+    <button mat-button *ngIf="isMine" (click)="deleteCharacter()">
+      Eliminar de mi equipo
+    </button>
   </mat-card-actions>
 </mat-card>

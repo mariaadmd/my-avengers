@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Character } from 'src/app/interfaces/character.interface';
 import { JarvisService } from 'src/app/services/jarvis.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -11,34 +12,30 @@ import { StorageService } from 'src/app/services/storage.service';
 export class CharacterCardComponent implements OnInit {
   @Input() character: Character;
 
-  @Output() addCharacterEmitter: EventEmitter<Character> = new EventEmitter();
-  @Output() deleteCharacterEmitter: EventEmitter<Character> =
-    new EventEmitter();
+  @Output() deleteEmitter: EventEmitter<number> = new EventEmitter();
 
-  myTeam: Character[];
   isMine: boolean;
 
-  constructor(private readonly jarvisService: JarvisService) {}
+  constructor(
+    private readonly jarvisService: JarvisService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.myTeam = this.jarvisService.getMyTeam();
-
-    this.isMine = this.myTeam.find(
-      (teamCharacter) => teamCharacter.id === this.character.id
-    )
-      ? true
-      : false;
-
-    console.log(this.isMine);
+    this.isMine = this.jarvisService.checkIsMine(this.character.id);
   }
 
   addCharacter(): void {
-    this.addCharacterEmitter.emit(this.character);
+    this.jarvisService.addCharacter(this.character);
     this.isMine = true;
   }
 
   deleteCharacter(): void {
-    this.deleteCharacterEmitter.emit(this.character);
+    this.jarvisService.deleteCharacter(this.character);
+    this.deleteEmitter.emit(this.character.id);
     this.isMine = false;
+  }
+  goToCharacterDetail() {
+    this.router.navigate(['/character', this.character.id]);
   }
 }
