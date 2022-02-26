@@ -1,0 +1,54 @@
+@import "src/app/styles/mixins.scss";
+
+.character-header {
+  padding: 25px;
+  .character-img {
+    @include medium-max {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    > img {
+      height: 260px;
+      width: 260px;
+      border-radius: 25px;
+    }
+  }
+
+  .character-info {
+    flex: 1;
+
+    @include medium {
+      padding-left: 25px;
+    }
+
+    > div {
+      margin-bottom: 40px;
+      
+      @include medium-max {
+        text-align: center;
+      }
+
+      @include medium {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .character-info-name {
+      font-size: 30px;
+      font-weight: 600;
+    }
+    .character-info-description {
+      font-size: 20px;
+      text-align: justify;
+    }
+  }
+}
+
+.carousel-cell {
+  img {
+    border-radius: 10px;
+  }
+}

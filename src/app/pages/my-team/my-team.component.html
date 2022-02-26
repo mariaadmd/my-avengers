@@ -1,3 +1,12 @@
+<div class="team-info">
+  <p>{{ myTeamInfo.name }}</p>
+  <p>
+    {{ myTeamInfo.description }}
+  </p>
+
+  <button mat-raised-button (click)="editTeamInfo()">Editar información</button>
+</div>
+
 <div class="characters-container" fxLayout="row wrap" fxLayoutGap="20px grid">
   <div
     fxFlex="25"
@@ -9,8 +18,7 @@
   >
     <app-character-card
       [character]="character"
-      (addCharacterEmitter)="addCharacter($event)"
-      (deleteCharacterEmitter)="deleteCharacter($event)"
+      (deleteEmitter)="deleteCharacter($event)"
     ></app-character-card>
   </div>
 </div>

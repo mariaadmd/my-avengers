@@ -1,1 +1,49 @@
-<p>character works!</p>
+<button mat-fab color="primary" (click)="goBack()">
+  <mat-icon>keyboard_arrow_left</mat-icon>
+</button>
+
+<div
+  class="character-header"
+  *ngIf="character"
+  fxLayout="row"
+  fxLayout.sm="column"
+  fxLayout.xs="column"
+>
+  <div class="character-img" fxFlex="260px shrink">
+    <img
+      [src]="character.thumbnail.path + '.' + character.thumbnail.extension"
+      class="animate__animated"
+      onload="this.classList.add('animate__fadeIn')"
+    />
+  </div>
+
+  <div class="character-info" fxFlex="75" fxFlex.xs="100" fx>
+    <div>
+      <p class="character-info-name">{{ character.name }}</p>
+
+      <button mat-raised-button *ngIf="!isMine" (click)="addCharacter()">
+        Añadir a mi equipo
+      </button>
+      <button mat-raised-button *ngIf="isMine" (click)="deleteCharacter()">
+        Eliminar de mi equipo
+      </button>
+    </div>
+    <p class="character-info-description">{{ character.description }}</p>
+  </div>
+</div>
+
+<div class="character-comics-carousel" *ngIf="characterComics">
+  <carousel [height]="300" [cellWidth]="200" [margin]="30">
+    <div
+      class="carousel-cell"
+      *ngFor="let comic of characterComics"
+      (click)="buyComic(comic.urls[0].url)"
+    >
+      <img
+        [src]="comic.thumbnail.path + '.' + comic.thumbnail.extension"
+        class="animate__animated"
+        onload="this.classList.add('animate__fadeIn')"
+      />
+    </div>
+  </carousel>
+</div>
