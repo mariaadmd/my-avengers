@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Character } from 'src/app/interfaces/character.interface';
 import { JarvisService } from 'src/app/services/jarvis.service';
@@ -18,7 +19,8 @@ export class CharacterCardComponent implements OnInit {
 
   constructor(
     private readonly jarvisService: JarvisService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +28,18 @@ export class CharacterCardComponent implements OnInit {
   }
 
   addCharacter(): void {
-    this.jarvisService.addCharacter(this.character);
-    this.isMine = true;
+    if (this.jarvisService.checkLenght()) {
+      this.snackBar.open(
+        'Ups! Tu equipo ya a alcanzado el maximo de heroes!',
+        '',
+        {
+          duration: 3000,
+        }
+      );
+    } else {
+      this.jarvisService.addCharacter(this.character);
+      this.isMine = true;
+    }
   }
 
   deleteCharacter(): void {

@@ -4,6 +4,7 @@ import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcom
 import { Character } from 'src/app/interfaces/character.interface';
 import { JarvisService } from 'src/app/services/jarvis.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-landing',
@@ -17,12 +18,14 @@ export class LandingComponent implements OnInit {
 
   constructor(
     private readonly jarvisService: JarvisService,
+    private readonly snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     if (this.jarvisService.checkTeam()) {
       this.jarvisService.getMyTeam();
+      this.getLandingCharacters();
     } else {
       const dialogRef = this.dialog.open(WelcomeDialogComponent);
 
@@ -31,9 +34,6 @@ export class LandingComponent implements OnInit {
         this.ngOnInit();
       });
     }
-
-    this.jarvisService.getMyTeam();
-    this.getLandingCharacters();
   }
 
   getLandingCharacters() {

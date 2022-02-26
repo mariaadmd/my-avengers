@@ -4,6 +4,7 @@ import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Character } from '../interfaces/character.interface';
 import { Comic } from '../interfaces/comic.interface';
 import { StorageService } from './storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class JarvisService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly storage: StorageService
+    private readonly storage: StorageService,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   setLoading(state: boolean): void {
@@ -94,6 +96,7 @@ export class JarvisService {
     let myTeam: Character[];
     if (this.storage.check('myTeam')) {
       myTeam = this.storage.get('myTeam');
+
       myTeam.push(character);
     } else {
       myTeam = [character];
@@ -129,5 +132,11 @@ export class JarvisService {
     } else {
       return false;
     }
+  }
+
+  checkLenght() {
+    let myTeam: Character[];
+    myTeam = this.storage.get('myTeam');
+    return myTeam.length >= 6 ? true : false;
   }
 }
