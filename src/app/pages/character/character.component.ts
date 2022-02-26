@@ -41,8 +41,10 @@ export class CharacterComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.getParams();
+    console.log(this.characterId);
 
     this.isMine = this.jarvisService.checkIsMine(this.characterId);
+    console.log(this.isMine);
 
     this.jarvisService.getCharacterById(this.characterId).subscribe((data) => {
       console.log(data);
@@ -58,9 +60,11 @@ export class CharacterComponent implements OnInit {
   }
 
   async getParams(): Promise<void> {
+    console.log('params');
+
     return new Promise<void>((resolve) => {
       this.activatedRoute.params.subscribe((params: Params) => {
-        this.characterId = params['id'];
+        this.characterId = parseInt(params['id']);
         resolve();
       });
     });

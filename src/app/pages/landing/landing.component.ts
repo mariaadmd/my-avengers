@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { WelcomeDialogComponent } from 'src/app/components/dialogs/welcome-dialog/welcome-dialog.component';
 import { Character } from 'src/app/interfaces/character.interface';
@@ -6,16 +6,19 @@ import { JarvisService } from 'src/app/services/jarvis.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericErrorDialogComponent } from 'src/app/component/dialogs/generic-error-dialog/generic-error-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, OnDestroy {
   characters: Character[];
   searched: boolean = false;
   paginationOffset: number;
+
+  scroll: Subscription;
 
   constructor(
     private readonly jarvisService: JarvisService,
@@ -24,7 +27,7 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.jarvisService.scrolled.subscribe(() => {
+    this.scroll = this.jarvisService.scrolled.subscribe(() => {
       if (!this.searched && this.characters) {
         this.paginationOffset += 25;
         this.getLandingCharacters();
@@ -41,6 +44,11 @@ export class LandingComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result) => {
         this.ngOnInit();
       });
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.scroll) {
+      this.scroll.unsubscribe();
     }
   }
 
