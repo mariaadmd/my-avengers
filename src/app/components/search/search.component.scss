@@ -1,0 +1,45 @@
+@import "src/app/styles/mixins.scss";
+
+.search-container {
+  margin-top: 30px;
+  padding: 0 25px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fffffff2;
+  border-radius: 10px;
+  box-shadow: 2px 4px 13px 7px rgb(0 0 0 / 34%);
+
+  .my-avengers-logo {
+    @include extra-small {
+      width: 90%;
+    }
+
+    @include small {
+      width: 70%;
+    }
+
+    @include medium {
+      width: 40%;
+    }
+  }
+  mat-form-field {
+    @include extra-small {
+      width: 90%;
+    }
+
+    @include small {
+      width: 90%;
+    }
+
+    @include medium {
+      width: 50%;
+    }
+    width: 50%;
+    margin-top: -15px;
+  }
+
+  button {
+    width: 25%;
+  }
+}

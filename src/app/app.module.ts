@@ -17,10 +17,11 @@ import { MyTeamComponent } from './pages/my-team/my-team.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SearchComponent } from './components/search/search.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
-import { TeamFormDialogComponent } from './components/team-form-dialog/team-form-dialog.component';
-import { WelcomeDialogComponent } from './components/welcome-dialog/welcome-dialog.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { TeamFormDialogComponent } from './components/dialogs/team-form-dialog/team-form-dialog.component';
+import { WelcomeDialogComponent } from './components/dialogs/welcome-dialog/welcome-dialog.component';
+import { GenericErrorDialogComponent } from './component/dialogs/generic-error-dialog/generic-error-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
     TeamFormDialogComponent,
     WelcomeDialogComponent,
     SpinnerComponent,
+    GenericErrorDialogComponent,
   ],
   imports: [
     BrowserModule,

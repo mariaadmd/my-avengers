@@ -11,6 +11,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-character',
@@ -34,7 +35,8 @@ export class CharacterComponent implements OnInit {
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly jarvisService: JarvisService,
-    private readonly location: Location
+    private readonly location: Location,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -64,12 +66,22 @@ export class CharacterComponent implements OnInit {
     });
   }
 
-  addCharacter() {
-    this.jarvisService.addCharacter(this.character);
-    this.isMine = true;
+  addCharacter(): void {
+    if (this.jarvisService.checkLenght()) {
+      this.snackBar.open(
+        'Ups! Tu equipo ya a alcanzado el maximo de heroes!',
+        '',
+        {
+          duration: 3000,
+        }
+      );
+    } else {
+      this.jarvisService.addCharacter(this.character);
+      this.isMine = true;
+    }
   }
 
-  deleteCharacter() {
+  deleteCharacter(): void {
     this.jarvisService.deleteCharacter(this.character);
     this.isMine = false;
   }

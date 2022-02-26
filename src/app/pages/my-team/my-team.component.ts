@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Character } from 'src/app/interfaces/character.interface';
 import { JarvisService } from 'src/app/services/jarvis.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TeamFormDialogComponent } from 'src/app/components/team-form-dialog/team-form-dialog.component';
+import { TeamFormDialogComponent } from 'src/app/components/dialogs/team-form-dialog/team-form-dialog.component';
 
 @Component({
   selector: 'app-my-team',

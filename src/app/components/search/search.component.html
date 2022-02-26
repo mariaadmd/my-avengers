@@ -1,16 +1,29 @@
-<mat-form-field class="example-form-field" appearance="fill">
-  <mat-label>Clearable input</mat-label>
+<div class="search-container">
+  <img
+    class="my-avengers-logo"
+    src="assets/img/logo.png"
+    alt="My Avengers Logo"
+  />
 
-  <input matInput type="text" [(ngModel)]="characterName" />
-  <button
-    *ngIf="characterName"
-    matSuffix
-    mat-icon-button
-    aria-label="Clear"
-    (click)="characterName = ''"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
-</mat-form-field>
+  <mat-form-field class="search-character" appearance="outline" color="accent">
+    <mat-label>Busca tu heroe</mat-label>
 
-<button mat-raised-button (click)="search()">Buscar</button>
+    <input
+      matInput
+      type="text"
+      [(ngModel)]="characterName"
+      (keyup.enter)="search()"
+    />
+    <button
+      *ngIf="characterName"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="characterName = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="search()">Buscar</button>
+</div>

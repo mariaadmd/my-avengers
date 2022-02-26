@@ -1,0 +1,54 @@
+@import "src/app/styles/mixins.scss";
+
+.team-info {
+  padding: 30px;
+  margin: 20px 0;
+  background-color: #fffffff2;
+  border-radius: 10px;
+  box-shadow: 2px 4px 13px 7px rgb(0 0 0 / 34%);
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include extra-small {
+    flex-direction: column;
+  }
+
+  @include small {
+    flex-direction: column;
+  }
+
+  @include medium {
+    flex-direction: column;
+  }
+
+  @include large {
+    flex-direction: row;
+  }
+  .team-name {
+    font-size: 50px;
+    font-family: Avengers;
+    line-height: 50px;
+
+    margin-top: 20px;
+  }
+  .team-description {
+    font-size: 20px;
+    font-family: Avengers;
+    line-height: 25px;
+    margin-top: 20px;
+  }
+
+  button {
+    height: 50px;
+  }
+}
+
+.characters-container {
+  padding: 30px;
+  background-color: #fffffff2;
+  border-radius: 10px;
+  box-shadow: 2px 4px 13px 7px rgb(0 0 0 / 34%);
+  margin-bottom: 20px;
+}

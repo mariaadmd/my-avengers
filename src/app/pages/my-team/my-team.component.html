@@ -1,22 +1,25 @@
 <div class="team-info">
-  <p>{{ myTeamInfo.name }}</p>
-  <p>
-    {{ myTeamInfo.description }}
-  </p>
+  <div class="name-and-description">
+    <p class="team-name">{{ myTeamInfo.name }}</p>
+    <p class="team-description">
+      {{ myTeamInfo.description }}
+    </p>
+  </div>
 
-  <button mat-raised-button (click)="editTeamInfo()">Editar información</button>
+  <button mat-raised-button color="primary" (click)="editTeamInfo()">
+    Editar información
+  </button>
 </div>
 
-<div class="characters-container" fxLayout="row wrap" fxLayoutGap="20px grid">
-  <div
-    fxFlex="33.33"
-    fxFlex.lg="33.33"
-    fxFlex.md="33.33"
-    fxFlex.sm="50"
-    fxFlex.xs="100"
-    *ngFor="let character of myTeam"
-  >
+<div class="characters-container">
+  <div class="characters" fxLayout="row wrap" fxLayoutGap="20px grid">
     <app-character-card
+      fxFlex="33.33"
+      fxFlex.lg="33.33"
+      fxFlex.md="33.33"
+      fxFlex.sm="50"
+      fxFlex.xs="100"
+      *ngFor="let character of myTeam"
       [character]="character"
       (deleteEmitter)="deleteCharacter($event)"
     ></app-character-card>
