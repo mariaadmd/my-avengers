@@ -9,6 +9,32 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgb(167, 167, 167);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 20px;
+}
+
+
 .character-card .mat-card-header-text {
   margin: 0;
+}
+
+img {
+  transition: 1s;
+  &.animate__animated {
+    opacity: 0;
+  }
+
+  &.animate__animated.animate__fadeIn {
+    opacity: 1;
+  }
 }
