@@ -1,27 +1,18 @@
 <app-search (searchTerm)="searchCharacter($event)"></app-search>
-
 <div
-  class="characters-container"
-  fxLayout="row wrap"
-  fxLayoutGap="20px grid"
-  infiniteScroll
-  [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="150"
-  [infiniteScrollContainer]="'.characters-container'"
-  (scrolled)="onScroll()"
+  class="characters-container animate__animated animate__fadeIn"
   *ngIf="characters"
-  [fromRoot]="true"
-  style="height: 100vh; overflow: scroll"
 >
-  <div
-    fxFlex="25"
-    fxFlex.lg="25"
-    fxFlex.md="33.33"
-    fxFlex.sm="50"
-    fxFlex.xs="100"
-    class="animate__animated animate__fadeIn"
-    *ngFor="let character of characters"
-  >
-    <app-character-card [character]="character"></app-character-card>
+  <div class="characters" fxLayout="row wrap" fxLayoutGap="20px grid">
+    <app-character-card
+      fxFlex="25"
+      fxFlex.lg="25"
+      fxFlex.md="33.33"
+      fxFlex.sm="50"
+      fxFlex.xs="100"
+      class="animate__animated animate__fadeIn"
+      *ngFor="let character of characters"
+      [character]="character"
+    ></app-character-card>
   </div>
 </div>

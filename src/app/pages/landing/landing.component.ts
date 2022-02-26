@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcome-dialog.component';
+import { WelcomeDialogComponent } from 'src/app/components/dialogs/welcome-dialog/welcome-dialog.component';
 import { Character } from 'src/app/interfaces/character.interface';
 import { JarvisService } from 'src/app/services/jarvis.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericErrorDialogComponent } from 'src/app/component/dialogs/generic-error-dialog/generic-error-dialog.component';
 
 @Component({
   selector: 'app-landing',
@@ -14,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LandingComponent implements OnInit {
   characters: Character[];
   searched: boolean = false;
-  paginationOffset: number = 0;
+  paginationOffset: number;
 
   constructor(
     private readonly jarvisService: JarvisService,
@@ -23,39 +24,40 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.jarvisService.scrolled.subscribe(() => {
+      if (!this.searched && this.characters) {
+        this.paginationOffset += 25;
+        this.getLandingCharacters();
+      }
+    });
+
     if (this.jarvisService.checkTeam()) {
+      this.paginationOffset = 0;
       this.jarvisService.getMyTeam();
       this.getLandingCharacters();
     } else {
       const dialogRef = this.dialog.open(WelcomeDialogComponent);
 
       dialogRef.afterClosed().subscribe((result) => {
-        console.log(`Dialog result: ${result}`);
         this.ngOnInit();
       });
     }
   }
 
   getLandingCharacters() {
-    console.log(this.paginationOffset);
-
-    this.jarvisService
-      .getLandingCharacters(this.paginationOffset)
-      .subscribe((data) => {
+    this.jarvisService.getLandingCharacters(this.paginationOffset).subscribe(
+      (data) => {
         console.log(data);
         if (this.characters) {
           this.characters = [...this.characters, ...data.data.results];
         } else {
           this.characters = data.data.results;
         }
-      });
-  }
-
-  onScroll(): void {
-    if (!this.searched) {
-      this.paginationOffset += 25;
-      this.getLandingCharacters();
-    }
+      },
+      (error) => {
+        this.dialog.open(GenericErrorDialogComponent);
+      }
+    );
   }
 
   searchCharacter(characterName: any) {
