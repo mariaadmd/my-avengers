@@ -16,6 +16,7 @@ export class JarvisService {
   private apiUrl = 'https://gateway.marvel.com/v1/public/';
 
   loading = new BehaviorSubject<boolean>(false);
+  scrolled = new BehaviorSubject<boolean>(false);
 
   constructor(
     private readonly http: HttpClient,
@@ -25,6 +26,10 @@ export class JarvisService {
 
   setLoading(state: boolean): void {
     this.loading.next(state);
+  }
+
+  onScroll() {
+    this.scrolled.next(true);
   }
 
   getLandingCharacters(offset: number): Observable<any> {

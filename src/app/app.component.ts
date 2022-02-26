@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { JarvisService } from './services/jarvis.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'my-avengers';
+
+  constructor(private readonly jarvisService: JarvisService) {}
+  onScroll() {
+    this.jarvisService.onScroll();
+  }
 }

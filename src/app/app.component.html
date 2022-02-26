@@ -1,14 +1,27 @@
 <app-navbar (openDrawer)="drawer.toggle()"></app-navbar>
 
-<mat-drawer-container class="main-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="over">
-    <button mat-raised-button [routerLink]="['/']">Pagina principal</button>
-    <button mat-raised-button [routerLink]="['/myTeam']">Mi equipo</button>
+<mat-drawer-container class="main-container">
+  <mat-drawer #drawer class="sidenav" mode="over">
+    <div class="sidenav-content">
+      <button mat-raised-button color="primary" [routerLink]="['/']">Buscador</button>
+      <button mat-raised-button color="primary" [routerLink]="['/myTeam']">Mi equipo</button>
+    </div>
   </mat-drawer>
 
-  <div class="main-page">
-    <router-outlet></router-outlet>
-  </div>
+  <mat-drawer-content
+    class="mat-drawer-content"
+    autosize
+    infiniteScroll
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="150"
+    [infiniteScrollContainer]="'.mat-drawer-content'"
+    (scrolled)="onScroll()"
+    [fromRoot]="true"
+  >
+    <div class="main-page">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
 </mat-drawer-container>
 
 <app-spinner></app-spinner>

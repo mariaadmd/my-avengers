@@ -1,12 +1,16 @@
 @import "src/app/styles/mixins.scss";
 
-
+mat-drawer-container {
+  background-image: url("/assets/img/avengers.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .main-container {
   height: calc(100vh - 64px);
 
   .main-page {
     margin: auto;
-    background-color: rgb(235, 235, 235);
+    // background-color: rgb(235, 235, 235);
     @include extra-small {
       width: calc(100% - 40px);
     }
@@ -15,10 +19,20 @@
       padding: 0 20px;
     }
     @include medium {
-      max-width: 800px;
+      max-width: 900px;
     }
     @include large {
-      max-width: 1024px;
+      max-width: 1200px;
+    }
+  }
+
+  .sidenav-content {
+    padding: 10px 25px;
+    display: flex;
+    flex-direction: column;
+    button {
+      width: 200px;
+      margin-bottom: 20px;
     }
   }
 }
