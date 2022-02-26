@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Character } from '../interfaces/character.interface';
 import { Comic } from '../interfaces/comic.interface';
 import { StorageService } from './storage.service';
@@ -14,7 +14,7 @@ export class JarvisService {
 
   private apiUrl = 'https://gateway.marvel.com/v1/public/';
 
-  loading = new Subject();
+  loading = new BehaviorSubject<boolean>(false);
 
   constructor(
     private readonly http: HttpClient,
