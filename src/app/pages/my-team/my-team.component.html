@@ -12,11 +12,11 @@
 </div>
 
 <div class="characters-container">
-  <p class="no-team-text" *ngIf="!myTeam">
+  <p class="no-team-text" *ngIf="!myTeam || myTeam.length === 0">
     ¡Parece que aun no has añadido heroes a tu equipo!
   </p>
 
-  <div class="characters" fxLayout="row wrap" fxLayoutGap="20px grid" *ngIf="myTeam">
+  <div class="characters" fxLayout="row wrap" fxLayoutGap="20px grid" *ngIf="myTeam && myTeam.length > 0">
     <app-character-card
       fxFlex="33.33"
       fxFlex.lg="33.33"
