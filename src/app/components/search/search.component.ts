@@ -9,13 +9,12 @@ export class SearchComponent implements OnInit {
   @Output() searchTerm: EventEmitter<string> = new EventEmitter();
 
   characterName: string;
+
   constructor() {}
 
   ngOnInit(): void {}
 
   search(): void {
-    console.log('search');
-
     this.searchTerm.emit(this.characterName);
   }
 }

@@ -1,12 +1,15 @@
+// Angular
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { WelcomeDialogComponent } from 'src/app/components/dialogs/welcome-dialog/welcome-dialog.component';
-import { Character } from 'src/app/interfaces/character.interface';
-import { JarvisService } from 'src/app/services/jarvis.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GenericErrorDialogComponent } from 'src/app/component/dialogs/generic-error-dialog/generic-error-dialog.component';
 import { Subscription } from 'rxjs';
+// Services
+import { JarvisService } from 'src/app/services/jarvis.service';
+// Interfaces
+import { Character } from 'src/app/interfaces/character.interface';
+// Components
+import { GenericErrorDialogComponent } from 'src/app/components/dialogs/generic-error-dialog/generic-error-dialog.component';
+import { TeamFormDialogComponent } from 'src/app/components/dialogs/team-form-dialog/team-form-dialog.component';
 
 @Component({
   selector: 'app-landing',
@@ -22,7 +25,6 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly jarvisService: JarvisService,
-    private readonly snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
 
@@ -39,9 +41,9 @@ export class LandingComponent implements OnInit, OnDestroy {
       this.jarvisService.getMyTeam();
       this.getLandingCharacters();
     } else {
-      const dialogRef = this.dialog.open(WelcomeDialogComponent);
+      const dialogRef = this.dialog.open(TeamFormDialogComponent);
 
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.afterClosed().subscribe(() => {
         this.ngOnInit();
       });
     }
@@ -53,28 +55,31 @@ export class LandingComponent implements OnInit, OnDestroy {
   }
 
   getLandingCharacters() {
-    this.jarvisService.getLandingCharacters(this.paginationOffset).subscribe(
-      (data) => {
-        console.log(data);
+    this.jarvisService.getLandingCharacters(this.paginationOffset).subscribe({
+      next: (data) => {
         if (this.characters) {
-          this.characters = [...this.characters, ...data.data.results];
+          this.characters = [...this.characters, ...data];
         } else {
-          this.characters = data.data.results;
+          this.characters = data;
         }
       },
-      (error) => {
+      error: (error) => {
+        console.log(error);
         this.dialog.open(GenericErrorDialogComponent);
-      }
-    );
+      },
+    });
   }
 
-  searchCharacter(characterName: any) {
-    console.log('searchCharacter');
-
-    this.jarvisService.searchCharacter(characterName).subscribe((data) => {
-      console.log(data);
-      this.characters = data;
-      this.searched = true;
+  searchCharacter(characterName: string) {
+    this.jarvisService.searchCharacter(characterName).subscribe({
+      next: (data) => {
+        this.characters = data;
+        this.searched = true;
+      },
+      error: (error) => {
+        console.log(error);
+        this.dialog.open(GenericErrorDialogComponent);
+      },
     });
   }
 }

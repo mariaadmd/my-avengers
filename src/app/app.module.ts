@@ -20,8 +20,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { TeamFormDialogComponent } from './components/dialogs/team-form-dialog/team-form-dialog.component';
-import { WelcomeDialogComponent } from './components/dialogs/welcome-dialog/welcome-dialog.component';
-import { GenericErrorDialogComponent } from './component/dialogs/generic-error-dialog/generic-error-dialog.component';
+import { GenericErrorDialogComponent } from './components/dialogs/generic-error-dialog/generic-error-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +31,6 @@ import { GenericErrorDialogComponent } from './component/dialogs/generic-error-d
     MyTeamComponent,
     SearchComponent,
     TeamFormDialogComponent,
-    WelcomeDialogComponent,
     SpinnerComponent,
     GenericErrorDialogComponent,
   ],

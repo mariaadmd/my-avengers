@@ -4,6 +4,7 @@ mat-drawer-container {
   background-image: url("/assets/img/avengers.png");
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 .main-container {
   height: calc(100vh - 64px);

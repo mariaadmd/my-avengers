@@ -2,6 +2,7 @@
   <mat-card-header>
     <mat-card-title>{{ character.name }}</mat-card-title>
   </mat-card-header>
+
   <div class="character-card-img">
     <img
       (click)="goToCharacterDetail()"
@@ -11,12 +12,17 @@
       onload="this.classList.add('animate__fadeIn')"
     />
   </div>
-  <mat-card-content> </mat-card-content>
+
   <mat-card-actions>
     <button mat-raised-button *ngIf="!isMine" (click)="addCharacter()">
       Añadir a mi equipo
     </button>
-    <button mat-raised-button color="primary" *ngIf="isMine" (click)="deleteCharacter()">
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="isMine"
+      (click)="deleteCharacter()"
+    >
       Eliminar de mi equipo
     </button>
   </mat-card-actions>

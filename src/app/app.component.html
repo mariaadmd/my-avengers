@@ -3,8 +3,8 @@
 <mat-drawer-container class="main-container">
   <mat-drawer #drawer class="sidenav" mode="over">
     <div class="sidenav-content">
-      <button mat-raised-button color="primary" [routerLink]="['/']">Buscador</button>
-      <button mat-raised-button color="primary" [routerLink]="['/myTeam']">Mi equipo</button>
+      <button mat-raised-button color="primary" (click)="drawer.toggle()" [routerLink]="['/']">Buscador</button>
+      <button mat-raised-button color="primary" (click)="drawer.toggle()" [routerLink]="['/myTeam']">Mi equipo</button>
     </div>
   </mat-drawer>
 

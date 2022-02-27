@@ -1,67 +1,62 @@
+// Angular
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Params } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+// Services
+import { JarvisService } from 'src/app/services/jarvis.service';
+// Interfaces
 import { Character } from 'src/app/interfaces/character.interface';
 import { Comic } from 'src/app/interfaces/comic.interface';
-import { JarvisService } from 'src/app/services/jarvis.service';
-import { Location } from '@angular/common';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// Components
+import { GenericErrorDialogComponent } from 'src/app/components/dialogs/generic-error-dialog/generic-error-dialog.component';
 
 @Component({
   selector: 'app-character',
   templateUrl: './character.component.html',
   styleUrls: ['./character.component.scss'],
-  animations: [
-    trigger('simpleFadeAnimation', [
-      state('in', style({ opacity: 1 })),
-      transition(':enter', [style({ opacity: 0 }), animate(1600)]),
-    ]),
-  ],
 })
 export class CharacterComponent implements OnInit {
-  characterId: number;
   character: Character;
-
   characterComics: Comic[];
 
+  characterId: number;
   isMine: boolean;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly jarvisService: JarvisService,
     private readonly location: Location,
-    private readonly snackBar: MatSnackBar
+    public dialog: MatDialog
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.getParams();
-    console.log(this.characterId);
 
     this.isMine = this.jarvisService.checkIsMine(this.characterId);
-    console.log(this.isMine);
 
-    this.jarvisService.getCharacterById(this.characterId).subscribe((data) => {
-      console.log(data);
-      this.character = data;
+    this.jarvisService.getCharacterById(this.characterId).subscribe({
+      next: (data) => {
+        this.character = data;
+      },
+      error: (error) => {
+        console.log(error);
+        this.dialog.open(GenericErrorDialogComponent);
+      },
     });
 
-    this.jarvisService
-      .getCharacterComics(this.characterId)
-      .subscribe((data) => {
-        console.log(data);
+    this.jarvisService.getCharacterComics(this.characterId).subscribe({
+      next: (data) => {
         this.characterComics = data;
-      });
+      },
+      error: (error) => {
+        console.log(error);
+        this.dialog.open(GenericErrorDialogComponent);
+      },
+    });
   }
 
   async getParams(): Promise<void> {
-    console.log('params');
-
     return new Promise<void>((resolve) => {
       this.activatedRoute.params.subscribe((params: Params) => {
         this.characterId = parseInt(params['id']);
@@ -72,13 +67,9 @@ export class CharacterComponent implements OnInit {
 
   addCharacter(): void {
     if (this.jarvisService.checkLenght()) {
-      this.snackBar.open(
-        'Ups! Tu equipo ya a alcanzado el maximo de heroes!',
-        '',
-        {
-          duration: 3000,
-        }
-      );
+      let message =
+        '¡Ups! ¡Tu equipo ya ha alcanzado el número máximo de héroes!';
+      this.jarvisService.showToast(message);
     } else {
       this.jarvisService.addCharacter(this.character);
       this.isMine = true;
@@ -90,11 +81,11 @@ export class CharacterComponent implements OnInit {
     this.isMine = false;
   }
 
-  buyComic(url: string) {
+  buyComic(url: string): void {
     window.open(url, '_blank');
   }
 
-  goBack() {
+  goBack(): void {
     this.location.back();
   }
 }

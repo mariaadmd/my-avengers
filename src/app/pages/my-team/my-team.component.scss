@@ -14,18 +14,16 @@
   @include extra-small {
     flex-direction: column;
   }
-
   @include small {
     flex-direction: column;
   }
-
   @include medium {
     flex-direction: column;
   }
-
   @include large {
     flex-direction: row;
   }
+
   .team-name {
     font-size: 50px;
     font-family: Avengers;
@@ -45,6 +43,10 @@
   }
 }
 
+.no-team-text {
+  margin: 0;
+  font-size: 18px;
+}
 .characters-container {
   padding: 30px;
   background-color: #fffffff2;
