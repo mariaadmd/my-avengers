@@ -1,6 +1,9 @@
+// Angular
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+// Services
+import { JarvisService } from 'src/app/services/jarvis.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -12,19 +15,30 @@ export class TeamFormDialogComponent implements OnInit {
   teamForm = new FormGroup({
     name: new FormControl(null, [Validators.required]),
     description: new FormControl(null, [Validators.required]),
-    imagePath: new FormControl(null),
   });
+
+  firstTime: boolean;
   constructor(
     private readonly storage: StorageService,
+    private readonly jarvisService: JarvisService,
     public dialogRef: MatDialogRef<TeamFormDialogComponent>
   ) {
     dialogRef.disableClose = true;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.jarvisService.checkTeam()) {
+      const info = this.jarvisService.getMyTeamInfo();
+      this.teamForm.patchValue({
+        name: info.name,
+        description: info.description,
+      });
+    } else {
+      this.firstTime = true;
+    }
+  }
 
   onSubmit(): void {
-    console.log(this.teamForm);
     const values = this.teamForm.value;
 
     const myTeamInfo = {

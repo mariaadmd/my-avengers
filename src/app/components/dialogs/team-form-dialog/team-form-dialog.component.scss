@@ -1,8 +1,40 @@
+@import "src/app/styles/mixins.scss";
+
+.first-time-text {
+  margin-bottom: 20px;
+  @include extra-small {
+    width: 100%;
+  }
+  @include small {
+    width: 100%;
+  }
+  @include medium {
+    width: 400px;
+  }
+  @include large {
+    width: 400px;
+  }
+}
+
 form {
   display: flex;
   flex-direction: column;
-  width: 400px;
   margin-bottom: 20px;
+  @include extra-small {
+    width: 100%;
+  }
+  @include small {
+    width: 100%;
+  }
+  @include medium {
+    width: 400px;
+  }
+  @include large {
+    width: 400px;
+  }
+  mat-form-field {
+    margin-bottom: 10px;
+  }
 }
 
 .dialog-actions {

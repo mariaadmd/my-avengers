@@ -1,22 +1,44 @@
+<p class="first-time-text" *ngIf="firstTime === true">
+  Parece que es la primera vez que usas My Avengers. Por favor, dale un nombre y
+  una descripción a tu equipo
+</p>
+
 <form [formGroup]="teamForm" *ngIf="teamForm">
   <mat-form-field appearance="outline">
     <mat-label>Nombre de tu equipo</mat-label>
-    <input matInput formControlName="name" placeholder="Los Vindicadores de la galaxia"/>
-    <mat-error *ngIf="teamForm.controls['name'].status === 'INVALID'"
-      >Este campo es obligatorio</mat-error
-    >
+    <input
+      matInput
+      formControlName="name"
+      placeholder="Los Vindicadores de la galaxia"
+    />
+    <mat-error *ngIf="teamForm.controls['name'].status === 'INVALID'">
+      Este campo es obligatorio
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Descripcion</mat-label>
-    <textarea matInput formControlName="description" placeholder="El equipo mas asombroso del multiverso"></textarea>
-    <mat-error *ngIf="teamForm.controls['description'].status === 'INVALID'"
-      >Este campo es obligatorio</mat-error
-    >
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="El equipo más asombroso del multiverso"
+    ></textarea>
+    <mat-error *ngIf="teamForm.controls['description'].status === 'INVALID'">
+      Este campo es obligatorio
+    </mat-error>
   </mat-form-field>
 </form>
 
 <div class="dialog-actions">
-  <button mat-raised-button color="accent" (click)="onSubmit()">Aceptar</button>
-  <button mat-raised-button (click)="cancelDialog()">Cancelar</button>
+  <button
+    mat-raised-button
+    color="accent"
+    [disabled]="!teamForm.valid"
+    (click)="onSubmit()"
+  >
+    Aceptar
+  </button>
+  <button *ngIf="!firstTime" mat-raised-button (click)="cancelDialog()">
+    Cancelar
+  </button>
 </div>
