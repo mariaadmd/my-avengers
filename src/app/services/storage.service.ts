@@ -14,7 +14,7 @@ export class StorageService {
     }
   }
 
-  get(key: string) {
+  get(key: string): any {
     if (localStorage.getItem(key)) {
       return JSON.parse(localStorage.getItem(key)!);
     } else {
@@ -22,15 +22,15 @@ export class StorageService {
     }
   }
 
-  set(key: string, item: any) {
+  set(key: string, item: any): void {
     localStorage.setItem(key, JSON.stringify(item));
   }
 
-  remove(key: string) {
+  remove(key: string): void {
     localStorage.removeItem(key);
   }
 
-  clear() {
+  clear(): void {
     localStorage.clear();
   }
 }

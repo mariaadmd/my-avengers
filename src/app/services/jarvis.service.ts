@@ -1,10 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+// Angular
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
-import { Character } from '../interfaces/character.interface';
-import { Comic } from '../interfaces/comic.interface';
-import { StorageService } from './storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+// Services
+import { StorageService } from './storage.service';
+// Interfaces
+import { Comic } from '../interfaces/comic.interface';
+import { Character } from '../interfaces/character.interface';
+import { TeamInfo } from '../interfaces/team.interface';
+import { MarvelResponse } from '../interfaces/marvel.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +33,17 @@ export class JarvisService {
     this.loading.next(state);
   }
 
-  onScroll() {
+  onScroll(): void {
     this.scrolled.next(true);
   }
 
-  getLandingCharacters(offset: number): Observable<any> {
+  showToast(message: string, duration?: number): void {
+    this.snackBar.open(message, '', {
+      duration: duration ? duration : 3000,
+    });
+  }
+
+  getLandingCharacters(offset: number): Observable<Character[]> {
     const params = {
       apikey: this.publicKey,
       limit: '25',
@@ -41,9 +52,11 @@ export class JarvisService {
       modifiedSince: '2015-01-01',
     };
 
-    return this.http.get<any>(this.apiUrl + '/characters', {
-      params: params,
-    });
+    return this.http
+      .get<MarvelResponse>(this.apiUrl + '/characters', {
+        params: params,
+      })
+      .pipe(map((resp) => resp.data.results));
   }
 
   searchCharacter(characterName: string): Observable<Character[]> {
@@ -53,7 +66,7 @@ export class JarvisService {
     };
 
     return this.http
-      .get<any>(this.apiUrl + '/characters', {
+      .get<MarvelResponse>(this.apiUrl + '/characters', {
         params: params,
       })
       .pipe(map((resp) => resp.data.results));
@@ -65,7 +78,7 @@ export class JarvisService {
     };
 
     return this.http
-      .get<any>(this.apiUrl + '/characters/' + characterId, {
+      .get<MarvelResponse>(this.apiUrl + '/characters/' + characterId, {
         params: params,
       })
       .pipe(map((resp) => resp.data.results[0]));
@@ -77,17 +90,22 @@ export class JarvisService {
     };
 
     return this.http
-      .get<any>(this.apiUrl + '/characters/' + characterId + '/comics', {
-        params: params,
-      })
+      .get<MarvelResponse>(
+        this.apiUrl + '/characters/' + characterId + '/comics',
+        {
+          params: params,
+        }
+      )
       .pipe(map((resp) => resp.data.results));
   }
 
   getMyTeam(): Character[] {
-    return this.storage.check('myTeam') ? this.storage.get('myTeam') : [];
+    return this.storage.check('myTeam')
+      ? this.storage.get('myTeam')
+      : undefined;
   }
 
-  getMyTeamInfo(): any {
+  getMyTeamInfo(): TeamInfo {
     return this.storage.check('myTeamInfo')
       ? this.storage.get('myTeamInfo')
       : undefined;
@@ -97,20 +115,18 @@ export class JarvisService {
     return this.storage.check('myTeamInfo') ? true : false;
   }
 
-  addCharacter(character: any) {
+  addCharacter(character: Character): void {
     let myTeam: Character[];
     if (this.storage.check('myTeam')) {
       myTeam = this.storage.get('myTeam');
-
       myTeam.push(character);
     } else {
       myTeam = [character];
     }
     this.storage.set('myTeam', myTeam);
-    console.log(myTeam);
   }
 
-  deleteCharacter(character: any) {
+  deleteCharacter(character: Character): void {
     console.log('delete');
 
     let myTeam: Character[];
@@ -127,7 +143,7 @@ export class JarvisService {
     console.log(myTeam);
   }
 
-  checkIsMine(characterId: number) {
+  checkIsMine(characterId: number): boolean {
     if (this.storage.check('myTeam')) {
       return this.storage
         .get('myTeam')
@@ -139,9 +155,8 @@ export class JarvisService {
     }
   }
 
-  checkLenght() {
-    let myTeam: Character[];
-    myTeam = this.storage.get('myTeam');
+  checkLenght(): boolean {
+    const myTeam: Character[] = this.storage.get('myTeam');
     return myTeam.length >= 6 ? true : false;
   }
 }
