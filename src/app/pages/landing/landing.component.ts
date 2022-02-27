@@ -1,7 +1,6 @@
 // Angular
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 // Services
 import { JarvisService } from 'src/app/services/jarvis.service';
@@ -38,7 +37,6 @@ export class LandingComponent implements OnInit, OnDestroy {
 
     if (this.jarvisService.checkTeam()) {
       this.paginationOffset = 0;
-      this.jarvisService.getMyTeam();
       this.getLandingCharacters();
     } else {
       const dialogRef = this.dialog.open(TeamFormDialogComponent);

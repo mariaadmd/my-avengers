@@ -37,10 +37,6 @@ export class MyTeamComponent implements OnInit {
     });
   }
 
-  addCharacter(character: Character): void {
-    this.jarvisService.addCharacter(character);
-  }
-
   deleteCharacter(characterId: number): void {
     this.myTeam = this.myTeam.filter(
       (teamCharacter) => teamCharacter.id !== characterId

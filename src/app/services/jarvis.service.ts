@@ -63,6 +63,7 @@ export class JarvisService {
     const params = {
       apikey: this.publicKey,
       nameStartsWith: characterName,
+      limit: 100,
     };
 
     return this.http
@@ -117,6 +118,7 @@ export class JarvisService {
 
   addCharacter(character: Character): void {
     let myTeam: Character[];
+
     if (this.storage.check('myTeam')) {
       myTeam = this.storage.get('myTeam');
       myTeam.push(character);
@@ -136,11 +138,8 @@ export class JarvisService {
       myTeam = myTeam.filter(
         (teamCharacter) => teamCharacter.id !== character.id
       );
-    } else {
-      myTeam = [character];
+      this.storage.set('myTeam', myTeam);
     }
-    this.storage.set('myTeam', myTeam);
-    console.log(myTeam);
   }
 
   checkIsMine(characterId: number): boolean {
